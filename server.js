@@ -3,7 +3,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
-const path = require('path')
+const path = require('path');
+const cors = require('cors');
 const fileupload = require('express-fileupload');
 // const cookieParser = require('cookie-parser')
 const errorHandler = require('./middleware/error')
@@ -58,7 +59,7 @@ app.use(express.json());
 // app.use(hpp());
 
 // //enable cors
-// app.use(cors());
+app.use(cors());
 
 //Dev logging middleware
 if(process.env.NODE_ENV === 'development'){

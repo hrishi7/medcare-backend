@@ -9,6 +9,16 @@ const asyncHandler = require('../middleware/async');
 //@access   Public
 exports.register = asyncHandler(async(req, res, next)=>{
     const {name, email,mobile, password, role} = req.body;
+
+    const userExist = await User.findOne({email});
+    if(userExist){
+       return res.json({
+           success: false,
+           data:{},
+           message:'Email Exist already!'
+       });
+    }
+
     //Create user
     const user = await User.create({
         name,email,mobile,password,role
@@ -22,18 +32,30 @@ exports.register = asyncHandler(async(req, res, next)=>{
 exports.login = asyncHandler(async(req, res, next)=>{
     const {email,password} = req.body;
     if(!email || !password){
-        return next(new ErrorResponse('Please Provide an email & password', 400));
+        return res.json({
+            success: false,
+            data:{},
+            message:'Please Provide an email & password'
+        });
     }
      //check for user
     const user = await User.findOne({email}).select('+password');
     if(!user){
-        return next( new ErrorResponse('Invalid Credentials', 401));
+        return res.json({
+            success: false,
+            data:{},
+            message:'Invalid Credentials'
+        });
     }
 
     //check if password matches
     const isMatch = await user.matchPassword(password);
     if(!isMatch){
-        return next( new ErrorResponse('Invalid Credentials', 401));
+        return res.json({
+            success: false,
+            data:{},
+            message:'Invalid Credentials'
+        });
     }
 
     sendTokenResponse(user,200,res);
@@ -81,8 +103,8 @@ const sendTokenResponse = (user,statusCode,res)=>{
         options.secure = true
     }
 
-    res.status(statusCode).cookie('token',token,options).json({
+    res.cookie('token',token,options).json({
         success: true,
-        token
+        data:token
     })
 }
