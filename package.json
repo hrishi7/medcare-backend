@@ -16,6 +16,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6-alpha.6",
+    "instamojo-nodejs": "0.0.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.7",
     "morgan": "^1.9.1"
@@ -23,8 +24,7 @@
   "devDependencies": {
     "nodemon": "^1.19.4"
   },
-  "engine":{
-    "node":"10.17.*"
+  "engine": {
+    "node": "10.17.*"
   }
-
 }

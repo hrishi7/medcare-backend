@@ -30,8 +30,8 @@ exports.getMedicine = asyncHandler(async(req, res, next) =>{
 exports.createMedicine =asyncHandler( async(req, res, next) =>{
         //Add user to req.body
         req.body.user = req.user.id;
-        //check if user is admin
-        if(req.user.role !== 'admin'){
+        //check if user is seller
+        if(req.user.role !== 'seller'){
                 return next(new ErrorResponse(`user ${req.user.id} is not authorize to create this medicine`,401));
         }
         const medicine = await Medicine.create(req.body);
@@ -48,8 +48,8 @@ exports.updateMedicine =asyncHandler( async(req, res, next) =>{
             return next(new ErrorResponse(`Medicine Not Found With The id of ${req.params.id}`,404));
         }
 
-        //make sure user is admin
-        if(req.user.role !== 'admin'){
+        //make sure user is seller
+        if(req.user.role !== 'seller'){
             return next(new ErrorResponse(`user ${req.user.id} is not authorize to update this medicine`,401));
         }
 
@@ -68,8 +68,8 @@ exports.deleteMedicine =asyncHandler( async(req, res, next) =>{
         if(!medicine){
             return next(new ErrorResponse(`Medicine Not Found With The id of ${req.params.id}`,404));
         }
-          //make sure user is admin
-        if(req.user.role !== 'admin'){
+          //make sure user is seller
+        if(req.user.role !== 'seller'){
             return next(new ErrorResponse(`user ${req.user.id} is not authorize to delete this medicine`,401));
         }
         medicine.remove();
@@ -90,7 +90,7 @@ exports.updateMedicineStock =asyncHandler( async(req, res, next) =>{
             return next(new ErrorResponse(`Medicine Not Found With The id of ${req.params.id}`,404));
         }
 
-        //make sure user is seller or admin
+        //make sure user is seller or seller
         if(req.user.role !== 'seller'){
                 return next(new ErrorResponse(`Not authorize of access this route`,401));
         }

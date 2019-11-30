@@ -21,6 +21,8 @@ dotenv.config({path:'./config/config.env'});
 //Route files
 const auth = require('./routes/auth');
 const medicines = require('./routes/medicines');
+const payment = require('./routes/payment');
+const orders = require('./routes/orders');
 // const auth = require('./routes/auth');
 // const users = require('./routes/users');
 // const reviews = require('./routes/reviews');
@@ -76,6 +78,8 @@ app.use(express.static(path.join(__dirname,'public')));
 //Mount routers
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/medicines', medicines);
+app.use('/api/v1/payment', payment);
+app.use('/api/v1/orders', orders);
 // app.use('/api/v1/auth', auth);
 // app.use('/api/v1/users', users);
 // app.use('/api/v1/reviews', reviews);
